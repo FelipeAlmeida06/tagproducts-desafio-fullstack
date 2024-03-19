@@ -5,8 +5,8 @@ Olá, bem vindo(a)!
 
 Esse é um teste tendo em vista a posição de "Desenvolvedor FullStack" na Tagview.
 
-Você deverá desenvolver uma aplicação web. Para ajudar sua organização (nossa 
-avaliação e bate-papo posteriores), dividimos em alguns tópicos:
+Você deverá desenvolver uma API REST (conectada a um banco de dados) e uma aplicação web que consumirá a API e será o frontend da aplicação.
+Para ajudar sua organização (nossa avaliação e bate-papo posteriores), dividimos em alguns tópicos:
 
 - Frontend
 - Backend
@@ -61,9 +61,7 @@ O formulário deverá ser validado antes de enviado com as seguintes regras:
 - Descrição Completa: mínimo de 30 caracteres, máximo de 255, obrigatório.
 - Imagem: png ou jpg, máximo de 5MB, opcional.
 
-A validação de frontend ocorrerá somente no momento de tentativa de submissão, os
-erros podem estar todos em uma área de erro ou (preferencialmente)
-próximos aos campos incorretos.
+A validação de frontend ocorrerá somente no momento de tentativa de submissão.
 
 No caso de erro no backend (também teremos validação por lá), o erro
 deve ser exibido no formulário.
@@ -75,31 +73,25 @@ escolha) será exibida com os dizeres: "Novo Produto Cadastrado!".
 
 
 ### Requisitos
-- Você pode utilizar qualquer framework frontend para essa tarefa, nós
+- Você pode utilizar qualquer framework javascript para essa tarefa, nós
 preferimos React, mas pode ser Vue, Angular, SolidJS, ou mesmo JS
-Vanilla. Mas saiba que definitivamente você irá trabalhar com React
-conosco!
+Vanilla.
 
-- Você pode utilizar qualquer biblioteca de componentes, nós gostamos
-de Material UI, mas também temos projetos com Chakra, Tailwind,
-Bootstrap e outros.
+- Você pode utilizar qualquer biblioteca de componentes e estilização, algumas bibliotecas que já utilizamos em projetos são Material UI,  Chakra UI e Tailwind CSS, mas pode utilizar outra de sua escolha.
 
-- O Design fica por sua conta (seja criativo!), na Tagview nós
-gostamos muito de CSS in JS e sass/scss. Se julgar necessário, utilize!
+- O Design fica por sua conta, busque ser criativo e prezar por uma boa usabilidade. Como sugestão, pode utilizar o Figma ou outra ferramenta para primeiro prototipar um design a ser implementado, se sentir confortável.
 
-- Nós utlizamos Typescript na maioria dos projetos de Frontend, mas
+- Nós utilizamos Typescript na maioria dos projetos de Frontend, mas
 fique à vontade para usar Javascript puro.
-
-- Para fins de simplificação, a imagem pode ser passada e recuperada da api codificada como uma string base64 e guardada no banco de dados.
-
-- Pense em uma NavBar para esse projeto com link para as duas URLs. E
-com o logo da Tagview ao lado esquerdo.
 
 - Qualquer outra url deverá retornar uma página com os dizeres:
 "Oooops. Essa página não existe."
 
 - As solicitações para a API devem conter o cabeçalho X-API-KEY com o
 valor "tagview-desafio-2024".
+
+- Configure ferramentas de formatação e linting para ajudar no
+desenvolvimento do app.
 
 
 ## Backend
@@ -223,7 +215,9 @@ cada tecnologia).
 queremos ver como o frontend se comporta enquanto aguarda a conclusão
 da requisição.
 
-- Faça um SWAGGER da sua api.
+- Faça um SWAGGER da sua api ou outra forma de documentação análoga.
+Se possível, implemente um processo que gere a documentação de forma
+automatizada.
 
 - Os requests para essa api deverão conter o cabeçalho X-API-KEY com o
 valor "tagview-desafio-2024", caso contrário, retorne 401 sem corpo.
@@ -231,9 +225,11 @@ valor "tagview-desafio-2024", caso contrário, retorne 401 sem corpo.
 - Erros genéricos na API e/ou perda de conexão com o banco devem
 retornar status code 500.
 
-- Inclua uma página "admin" (ou algo semelhante) para gerenciamento
-rápido dos dados cadastrados (autenticação seria desejável, mas não é
-obrigatória).
+- Para fins de simplificação, você pode passar e retornar imagens da API codificadas como uma string base64. Também pode guardar as imagens no banco de dados.
+
+- Opcionalmente, implemente uma página "admin" (ou algo semelhante) para 
+gerenciamento rápido dos dados cadastrados (autenticação seria desejável,
+mas não é obrigatória). Não é uma feature obrigatória, mas conta pontos.
 
 - Incluir testes de validação dos endpoints é opcional, mas conta
 pontos.
@@ -242,12 +238,11 @@ pontos.
 ## Banco de Dados
 
 - Você deverá criar uma tabela com as colunas solicitadas nos passos
-anteriores, adicionando a data de criação e a última data de modificação.
+anteriores, adicionando a data de criação, a última data de modificação
+e demais campos que julgar necessário.
 
 - Para manutenção da página de administração da api, utilize esse
 mesmo banco.
-
-- Configure autenticação para funcionar via connection string.
 
 - Crie uma massa de dados de teste com 100 produtos e um script para
 automatizar essa geração.
@@ -272,7 +267,7 @@ docker-compose.yml
 
 api/
    Dockerfile
-   swager/
+   swagger/
    ...(Projeto de Backend)
 client/
    Dockerfile
@@ -289,9 +284,8 @@ pela porta 4000.
 
 ### Considerações finais
 
-- Faça seu desenvolvimento em partes e vá "comitando" pequenas
-alterações, nós gostamos de ver um git log que conta uma história e
-não um commit único com tudo pronto.
+- Utilize git para o versionamento do projeto e evite commits com muitas alterações.
+Nós gostamos de ver um git log que conta uma história e não um commit único com tudo pronto. Claro que, se você utilizar branches diferentes que são mergeadas na master, não tem problema a master ficar com poucos commits.
 
 - Não fique pensando em "comitar" somente o que deu certo, se precisar
 refatorar, alterar alguma coisa, é até melhor termos um histórico,
@@ -299,15 +293,10 @@ isso ajuda a mostrar a forma como você pensa e como resolve os
 problemas.
 
 - A stack ideal (como explanado acima) seria Ruby on Rails + React +
-MySQL, a posição é para trabalhar com essa stack, então, apesar de
-não ser obrigatório utilizá-la, seu aprendizado para com essa stack
-deverá ser rápido.
+MySQL, já que a posição é para trabalhar com essa stack.
 
 - Suba seu código em um repositório público no Github, Gitlab ou site
 git preferido e nos envie o link, não esqueça de deixar o acesso público!
-
-- Configure ferramentas de formatação e linting para ajudar no
-desenvolvimento do app.
 
 - Utilize comentários onde e quando achar apropriado.
 
