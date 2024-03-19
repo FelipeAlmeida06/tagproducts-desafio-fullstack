@@ -3,9 +3,11 @@
 
 Olá, bem vindo(a)!
 
-Esse é um teste tendo em vista a posição de "Desenvolvedor FullStack" na Tagview.
+Esse é um teste técnico tendo em vista a posição de "Desenvolvedor FullStack" na Tagview.
 
-Você deverá desenvolver uma API REST (conectada a um banco de dados) e uma aplicação web que consumirá a API e será o frontend da aplicação.
+Você deverá desenvolver uma API REST (conectada a um banco de dados) e uma aplicação web que consumirá a API e será o frontend da aplicação. Ambos os projetos devem ficar em um mesmo repositório Git, com a estrutura indicada na seção Docker.
+
+
 Para ajudar sua organização (nossa avaliação e bate-papo posteriores), dividimos em alguns tópicos:
 
 - Frontend
@@ -161,7 +163,7 @@ Não há restrições para cadastros de produtos "repetidos".
 
 ### Importação de produtos via CSV - POST `/api/v1/produtos/importacao`
 
-Esse endpoint não será consumido pelo frontend, mas via curl/Postman/Insomnia.
+Esse endpoint não será consumido pelo frontend, mas via um client HTTP como curl, Postman ou Insomnia.
 
 Deverá receber um POST um arquivo .csv de no máximo 10MB.
 
@@ -187,7 +189,7 @@ Produto2, 3000, data:image/jpeg;base64... , Esse teclado mecânico vai revolucio
 A primeira linha sempre será o cabeçalho e poderá vir em ordens
 diferente da proposta acima.
 
-A validação dos dados será a mesma do endpoint `/api/v1/produtos`.
+A validação dos dados será a mesma do endpoint `/api/v1/produtos` (imagem é opcional).
 
 No caso de erros no processamento das linhas, você deverá enviar uma resposta com
 status code 422 e um JSON:
@@ -227,10 +229,6 @@ retornar status code 500.
 
 - Para fins de simplificação, você pode passar e retornar imagens da API codificadas como uma string base64. Também pode guardar as imagens no banco de dados.
 
-- Opcionalmente, implemente uma página "admin" (ou algo semelhante) para 
-gerenciamento rápido dos dados cadastrados (autenticação seria desejável,
-mas não é obrigatória). Não é uma feature obrigatória, mas conta pontos.
-
 - Incluir testes de validação dos endpoints é opcional, mas conta
 pontos.
 
@@ -240,12 +238,6 @@ pontos.
 - Você deverá criar uma tabela com as colunas solicitadas nos passos
 anteriores, adicionando a data de criação, a última data de modificação
 e demais campos que julgar necessário.
-
-- Para manutenção da página de administração da api, utilize esse
-mesmo banco.
-
-- Crie uma massa de dados de teste com 100 produtos e um script para
-automatizar essa geração.
 
 - Utilize um DBMS Relacional (SQL), não serão aceitos para o desafio
 DBMSs NOSQL e SQLite. Nós preferimos MySQL e PostgreSQL.
@@ -287,13 +279,15 @@ pela porta 4000.
 - Utilize git para o versionamento do projeto e evite commits com muitas alterações.
 Nós gostamos de ver um git log que conta uma história e não um commit único com tudo pronto. Claro que, se você utilizar branches diferentes que são mergeadas na master, não tem problema a master ficar com poucos commits.
 
+- Faça grande uso de frameworks e bibliotecas no projeto para minimizar seu trabalho e aumentar sua produtividade. Não esperamos que alguém implemente as funcionalidades do zero. Busque utilizar bibliotecas bem estabelecidas na comunidade e sendo mantidas até hoje.
+
 - Não fique pensando em "comitar" somente o que deu certo, se precisar
 refatorar, alterar alguma coisa, é até melhor termos um histórico,
 isso ajuda a mostrar a forma como você pensa e como resolve os
 problemas.
 
-- A stack ideal (como explanado acima) seria Ruby on Rails + React +
-MySQL, já que a posição é para trabalhar com essa stack.
+- A stack utilizada no projeto de nossa empresa é Ruby on Rails + React +
+MySQL. Se possível, utilize essa stack, caso contrário, pode utilizar tecnologias com as quais se sente confortável.
 
 - Suba seu código em um repositório público no Github, Gitlab ou site
 git preferido e nos envie o link, não esqueça de deixar o acesso público!
