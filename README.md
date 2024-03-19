@@ -1,10 +1,9 @@
 
-# TagProducts - Teste para Desenvolvedor FullStack Pleno da Tagview
+# TagProducts - Teste para Desenvolvedor FullStack da Tagview
 
 Olá, bem vindo(a)!
 
-Esse é um teste tendo em vista a posição de "Desenvolvedor FullStack
-Pleno" na Tagview.
+Esse é um teste tendo em vista a posição de "Desenvolvedor FullStack" na Tagview.
 
 Você deverá desenvolver uma aplicação web. Para ajudar sua organização (nossa 
 avaliação e bate-papo posteriores), dividimos em alguns tópicos:
@@ -86,12 +85,12 @@ de Material UI, mas também temos projetos com Chakra, Tailwind,
 Bootstrap e outros.
 
 - O Design fica por sua conta (seja criativo!), na Tagview nós
-gostamos muito de sass/scss. Se julgar necessário, utilize!
+gostamos muito de CSS in JS e sass/scss. Se julgar necessário, utilize!
 
 - Nós utlizamos Typescript na maioria dos projetos de Frontend, mas
 fique à vontade para usar Javascript puro.
 
-- A imagem será passada e recuperada da api codificada em uma string base64.
+- Para fins de simplificação, a imagem pode ser passada e recuperada da api codificada como uma string base64 e guardada no banco de dados.
 
 - Pense em uma NavBar para esse projeto com link para as duas URLs. E
 com o logo da Tagview ao lado esquerdo.
@@ -107,12 +106,12 @@ valor "tagview-desafio-2024".
 
 Endpoints da nossa api:
 
-### `/api/v1/produtos`
+### Listagem de produtos - GET `/api/v1/produtos`
 Acessado com o método GET, listará os produtos cadastrados, retornará
 um JSON no formato:
 
 ```json
-{
+[
   {
     "id": uuid,
 	"nome": string,
@@ -121,13 +120,13 @@ um JSON no formato:
 	"descricao": string,
   },
   ...
-}
+]
 ```
 
-No caso de nenhum produto cadastrado, retorna um JSON vazio.
+No caso de nenhum produto cadastrado, retorna um array JSON vazio.
 
 
-### `/api/v1/produtos`
+### Criação de produto - POST `/api/v1/produtos`
 
 Acessado com o método POST enviando um corpo JSON no formato:
 ```json
@@ -140,7 +139,7 @@ Acessado com o método POST enviando um corpo JSON no formato:
 ```
 
 Todos os campos deverão ser validados de acordo com os requisitos
-solicitados na etapa de Frontend, com uma excessão:
+solicitados na etapa de Frontend, com uma exceção:
 
 Aqui nós vamos limitar o tamanho da imagem para 2MB, só para forçar
 um erro que será enviado ao frontend em um teste ponta à ponta.
@@ -168,9 +167,9 @@ No caso de sucesso o retorno será com o status code 200 e o corpo:
 Não há restrições para cadastros de produtos "repetidos".
 
 
-### `/api/v1/produtos/importacao`
+### Importação de produtos via CSV - POST `/api/v1/produtos/importacao`
 
-Esse endpoint não será consumido pelo frontend, mas via curl/Postman.
+Esse endpoint não será consumido pelo frontend, mas via curl/Postman/Insomnia.
 
 Deverá receber um POST um arquivo .csv de no máximo 10MB.
 
@@ -217,7 +216,8 @@ code 200 sem corpo.
 backend. Você definitivamente irá trabalhar com essa tecnologia, então
 seria muito bom fazer o desafio com esse framework (conta pontos). Mas
 para o desafio também aceitaremos outras tecnologias no backend, seja
-em Node, Java, Python, Rust, etc.
+em Node, Java, Python, Rust, etc (com ou sem frameworks e bibliotecas de
+cada tecnologia).
 
 - Inclua um delay de 3 segundos antes do retorno de cada requisição,
 queremos ver como o frontend se comporta enquanto aguarda a conclusão
