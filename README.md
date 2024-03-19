@@ -1,13 +1,13 @@
 
-# TagProducts - Teste Desenvolvedor FullStack Pleno
+# TagProducts - Teste para Desenvolvedor FullStack Pleno da Tagview
 
 Olá, bem vindo(a)!
 
 Esse é um teste tendo em vista a posição de "Desenvolvedor FullStack
 Pleno" na Tagview.
 
-Você deverá desenvolver um web app e para ajudar sua organização (
-nossa avaliação e bate-papo posteriores), dividimos em alguns tópicos:
+Você deverá desenvolver uma aplicação web. Para ajudar sua organização (nossa 
+avaliação e bate-papo posteriores), dividimos em alguns tópicos:
 
 - Frontend
 - Backend
@@ -44,7 +44,7 @@ adicionando a descrição completa do produto.
 Essa página também deverá aceitar um "query param" `idProduto` com o
 código do produto cadastro. Caso seja acessada diretamente com o query
 param na URL, nada muda na feature de listagem, mas o modal deverá
-iniciar aberto na produto solicitado.
+iniciar aberto no produto solicitado.
 
 
 ### `/produtos/cadastro`
@@ -91,16 +91,16 @@ gostamos muito de sass/scss. Se julgar necessário, utilize!
 - Nós utlizamos Typescript na maioria dos projetos de Frontend, mas
 fique à vontade para usar Javascript puro.
 
-- A imagem será passada e recuperada da api codificada em base64.
+- A imagem será passada e recuperada da api codificada em uma string base64.
 
-- Pense em uma NavBar para esse projeto com link para as duas urls. E
+- Pense em uma NavBar para esse projeto com link para as duas URLs. E
 com o logo da Tagview ao lado esquerdo.
 
 - Qualquer outra url deverá retornar uma página com os dizeres:
 "Oooops. Essa página não existe."
 
 - As solicitações para a API devem conter o cabeçalho X-API-KEY com o
-valor "tagview-desafio-2024"
+valor "tagview-desafio-2024".
 
 
 ## Backend
@@ -165,12 +165,12 @@ No caso de sucesso o retorno será com o status code 200 e o corpo:
 }
 ```
 
-Não há restrições para cadastros de produtos "repetidos"
+Não há restrições para cadastros de produtos "repetidos".
 
 
 ### `/api/v1/produtos/importacao`
 
-Esse endpoint não será consumido pelo frontend, mas via Curl/Postman.
+Esse endpoint não será consumido pelo frontend, mas via curl/Postman.
 
 Deverá receber um POST um arquivo .csv de no máximo 10MB.
 
@@ -214,7 +214,7 @@ code 200 sem corpo.
 ### Requisitos
 
 - Na Tagview nós usamos Ruby on Rails como framework preferido de
-backend. Você definitivamente IRÁ trabalhar com essa tecnologia, então
+backend. Você definitivamente irá trabalhar com essa tecnologia, então
 seria muito bom fazer o desafio com esse framework (conta pontos). Mas
 para o desafio também aceitaremos outras tecnologias no backend, seja
 em Node, Java, Python, Rust, etc.
@@ -259,7 +259,7 @@ DBMSs NOSQL e SQLite. Nós preferimos MySQL e PostgreSQL.
 ## Docker e MonoRepo
 
 Aqui na Tagview nós amamos Docker! Isso garante que o que funciona na
-máquina de um programador, também funcione na máquina de outros e em
+máquina de um programador, também funcione na máquina dos demais e em
 produção.
 
 Seu projeto deve ser estruturado na seguinte árvore em um único
@@ -303,7 +303,7 @@ MySQL, a posição é para trabalhar com essa stack, então, apesar de
 não ser obrigatório utilizá-la, seu aprendizado para com essa stack
 deverá ser rápido.
 
-- Suba seu código em um repositório publico no Github, Gitlab ou site
+- Suba seu código em um repositório público no Github, Gitlab ou site
 git preferido e nos envie o link, não esqueça de deixar o acesso público!
 
 - Configure ferramentas de formatação e linting para ajudar no
