@@ -161,7 +161,7 @@ No caso de sucesso o retorno será com o status code 200 e o corpo:
 Não há restrições para cadastros de produtos "repetidos".
 
 
-### Importação de produtos via CSV - POST `/api/v1/produtos/importacao`
+### (Opcional) Importação de produtos via CSV - POST `/api/v1/produtos/importacao`
 
 Esse endpoint não será consumido pelo frontend, mas via um client HTTP como curl, Postman ou Insomnia.
 
@@ -229,9 +229,6 @@ retornar status code 500.
 
 - Para fins de simplificação, você pode passar e retornar imagens da API codificadas como uma string base64. Também pode guardar as imagens no banco de dados.
 
-- Incluir testes de validação dos endpoints é opcional, mas conta
-pontos.
-
 
 ## Banco de Dados
 
@@ -291,6 +288,8 @@ MySQL. Se possível, utilize essa stack, caso contrário, pode utilizar tecnolog
 
 - Suba seu código em um repositório público no Github, Gitlab ou site
 git preferido e nos envie o link, não esqueça de deixar o acesso público!
+
+- Opcionalmente, faça deploy de sua aplicação na nuvem, isso é, faça deploy do frontend e do backend e deixe a aplicação publicamente acessível na Internet. Para isso você pode utilizar os serviços que conhecer, alguns muito usados são: Netlify, Vercel e Heroku (no entanto o Heroku não tem mais um plano free).
 
 - Utilize comentários onde e quando achar apropriado.
 
