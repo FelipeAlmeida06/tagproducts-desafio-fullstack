@@ -7,6 +7,8 @@ Esse é um teste técnico tendo em vista a posição de "Desenvolvedor FullStack
 
 Você deverá desenvolver uma API REST (conectada a um banco de dados) e uma aplicação web que consumirá a API e será o frontend da aplicação. Ambos os projetos devem ficar em um mesmo repositório Git, com a estrutura indicada na seção Docker.
 
+⚠️ Recomendamos que você evite o uso de IA durante o desenvolvimento, pois esperamos que você tenha um grande nível de compreensão de seu próprio código e haverá uma entrevista técnica onde seu código será avaliado.
+
 
 Para ajudar sua organização (nossa avaliação e bate-papo posteriores), dividimos em alguns tópicos:
 
