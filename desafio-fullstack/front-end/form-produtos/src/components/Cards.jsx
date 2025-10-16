@@ -5,13 +5,26 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate} from "react-router-dom";
 import {X} from "lucide-react";
+
 import "./Cards.css"
+import PaginacaoProdutos from "./Paginacao";
 
 export default function CardsProdutos({produtos}) {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [modalAberto, setModalAberto] = useState(false);
     const [prodSelecionado, setProdSelecionado] = useState(null);
+
+
+    // Paginação
+    const [paginaAtual, setPaginaAtual] = useState(1);
+    const [limite, setLimite] = useState(10);
+
+    const totalPaginas = Math.ceil(produtos.length / limite);
+    const inicio = (paginaAtual - 1) * limite;
+    const fim = inicio + limite;
+    const produtosExibidos = produtos.slice(inicio, fim);
+
 
     // Verifica se há um idProduto na URL ao carregar a página
     useEffect(() => {
@@ -45,6 +58,13 @@ export default function CardsProdutos({produtos}) {
         navigate("/");
     };
 
+    const irParaAnterior = () => setPaginaAtual((p) => Math.max(p - 1, 1));
+    const irParaProximo = () => setPaginaAtual((p) => Math.min(p + 1, totalPaginas));
+    const alterarLimite = (novoLimite) => {
+        setLimite(novoLimite);
+        setPaginaAtual(1);
+    };
+
     const imagemFallback = "";
 
     return (
@@ -57,7 +77,7 @@ export default function CardsProdutos({produtos}) {
             <div className="container-exibir">
                 <div className="botao-voltar">
                     <button onClick={voltar} className="btn-voltar">
-                        ← Voltar para Formulário
+                        ← Voltar para o Formulário
                     </button>
                 </div>
 
@@ -68,40 +88,50 @@ export default function CardsProdutos({produtos}) {
                     </div>
                 ) : (
                     <div>
-                        <h2 className="titulo-lista">Produtos Cadastrados ({produtos.length})</h2>
+                        <h2 className="titulo-lista">
+                            Produtos Cadastrados ({produtos.length})
+                        </h2>
+
+                        {/* 🔹 Lista de produtos paginada */}
                         <div className="grid-cards">
-                            {produtos.map((produto) => (
+                            {produtosExibidos.map((produto) => (
                                 <div
-                                    key={produto.id}
-                                    className="card-produto"
-                                    onClick={() => abrirModal(produto)}
-                                    role="button"
-                                    tabIndex={0}
-                                    onKeyPress={(e) => {
-                                        if (e.key === "Enter") abrirModal(produto);
-                                    }}
+                                key={produto.id}
+                                className="card-produto"
+                                onClick={() => abrirModal(produto)}
                                 >
-                                    <div className="card-imagem">
-                                        <img
-                                            src={produto.imagemProd || imagemFallback}
-                                            alt={produto.nomeProd}
-                                        />
-                                    </div>
-                                    <div className="card-info">
-                                        <h3>{produto.nomeProd}</h3>
-                                        <p className="card-preco">
-                                            R$ {produto.precoProd.toFixed(2).replace(".", ",")}
-                                        </p>
-                                    </div>
-                                    <div className="card-hover">
-                                        <span>Mais detalhes sobre o produto</span>
-                                    </div>
+                                <div className="card-imagem">
+                                    <img
+                                    src={produto.imagemProd || imagemFallback}
+                                    alt={produto.nomeProd}
+                                    />
+                                </div>
+                                <div className="card-info">
+                                    <h3>{produto.nomeProd}</h3>
+                                    <p className="card-preco">
+                                    R$ {produto.precoProd.toFixed(2).replace(".", ",")}
+                                    </p>
+                                </div>
+                                <div className="card-hover">
+                                    <span>Mais detalhes sobre o produto</span>
+                                </div>
                                 </div>
                             ))}
                         </div>
+
+                        {/* 🔹 Componente de paginação */}
+                        <PaginacaoProdutos
+                            paginaAtual={paginaAtual}
+                            totalPaginas={totalPaginas}
+                            limite={limite}
+                            onAlterarLimite={alterarLimite}
+                            onPaginaAnterior={irParaAnterior}
+                            onPaginaProxima={irParaProximo}
+                        />
                     </div>
                 )}
             </div>
+
 
             {/* Modal */}
             {modalAberto && prodSelecionado && (

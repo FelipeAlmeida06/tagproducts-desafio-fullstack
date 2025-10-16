@@ -1,0 +1,45 @@
+.paginacao-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+  
+.controle-limite select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 14px;
+}
+  
+.botoes-paginacao {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+  
+.btn-paginacao {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+  
+.btn-paginacao:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+  
+.btn-paginacao:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+  
+.status-paginacao {
+    font-weight: 500;
+}
