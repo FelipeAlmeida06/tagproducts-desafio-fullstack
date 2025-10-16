@@ -5,7 +5,11 @@ import { useState, useRef } from "react";
 import {Package, DollarSign, FileText, CheckCircle} from 'lucide-react';
 import "./Formulario.css";      // import do CSS puro
 
-export default function FormularioProdutos() {
+import { useNavigate } from "react-router-dom";
+
+export default function FormularioProdutos({onAdicionarProduto}) {
+    const navigate = useNavigate();
+
     const [dadosForm, setDadosForm] = useState({
         nomeProduto: "",
         precoProduto: "",
@@ -14,7 +18,7 @@ export default function FormularioProdutos() {
     });
 
     const [visualImagem, setVisualImagem] = useState(null);
-    const [produtos, setProdutos] = useState([]);
+    //const [produtos, setProdutos] = useState([]);
     const [sucesso, setSucesso] = useState(false);
     const inputImagemRef = useRef(null);
 
@@ -76,7 +80,10 @@ export default function FormularioProdutos() {
             nomeArq: dadosForm.imagemProduto.name,
         };
 
-        setProdutos((prev) => [...prev, novoProduto]);
+        // Chama a função para adicionar o produto
+        onAdicionarProduto(novoProduto);
+
+        //setProdutos((prev) => [...prev, novoProduto]);
         setDadosForm({
             nomeProduto: "",
             precoProduto: "",
@@ -130,7 +137,7 @@ export default function FormularioProdutos() {
       if (!dadosForm.precoProduto) {
         novosErros.precoProduto = "Preço do produto é obrigatório";
       } else if (parseFloat(dadosForm.precoProduto) < 10) {
-        novosErros.precoProduto = "Preço do produto mínimo é R$ 10,00";
+        novosErros.precoProduto = "Preço do produto mínimo é de R$ 10,00";
       }
 
       // Validar Descrição (30-255 caracteres é obrigatório)
@@ -155,8 +162,21 @@ export default function FormularioProdutos() {
       return Object.keys(novosErros).length === 0;
     }
 
+    // Ir para página de exibição
+    const irPaginaExibicao = () => {
+      navigate("/produtos/exibir");
+    }
+
   return (
     <div className="pagina">
+
+        {sucesso && (
+          <div className="alerta-sucesso-flutuante">
+            <CheckCircle className="icone-sucesso" size={24} />
+            <span>Produto cadastrado com sucesso!</span>
+          </div>
+        )}
+
         <header>
             <h1>TagProducts</h1>
             <h2>Teste para Desenvolvedor FullStack da Tagview</h2>
@@ -167,12 +187,6 @@ export default function FormularioProdutos() {
           <div className="titulo">
             <h1>Formulário de Cadastro de Produtos</h1>
           </div>
-
-          {sucesso && (
-            <div className="alerta-sucesso">
-              <span>Produto cadastrado com sucesso!</span>
-            </div>
-          )}
 
           <form onSubmit={lidarComEnvio}>
             <label>
@@ -255,6 +269,15 @@ export default function FormularioProdutos() {
           </form>
         </div>
 
+
+        <div className="botoes-navegacao">
+          <button className="botao-exibir" onClick={irPaginaExibicao}>
+            📦 Ver Produtos Cadastrados
+          </button>
+        </div>
+
+
+        {/*
         {produtos.length > 0 && (
           <div className="card">
             <h2>Produtos Cadastrados</h2>
@@ -275,6 +298,9 @@ export default function FormularioProdutos() {
             </div>
           </div>
         )}
+        */}
+
+        
       </div>
 
       <footer className="rodape">

@@ -1,0 +1,336 @@
+.container-exibir {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.botao-voltar {
+    margin-bottom: 2rem;
+}
+
+.btn-voltar {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-voltar:hover {
+    background-color: #2980b9;
+}
+
+.btn-voltar:active {
+    transform: scale(0.98);
+}
+
+/* Mensagem de sem produtos */
+.sem-produtos {
+    background-color: #ecf0f1;
+    border: 2px solid #bdc3c7;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    text-align: center;
+    color: #34495e;
+}
+
+.sem-produtos p {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.sem-produtos strong {
+    color: #2c3e50;
+}
+
+/* Titulo da lista */
+.titulo-lista {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+/* Grid de cards */
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* Card do Produto */
+.card-produto {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.card-produto:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.card-produto:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+.card-imagem {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-produto:hover .card-imagem img {
+    transform: scale(1.05);
+}
+
+.card-info {
+    padding: 1.5rem;
+}
+
+.card-info h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0 0 0.75rem 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-preco {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #27ae60;
+    margin: 0;
+}
+
+.card-hover {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(52, 152, 219, 0.95);
+    color: white;
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card-produto:hover .card-hover {
+    opacity: 1;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-conteudo {
+    background: white;
+    border-radius: 1rem;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.botao-fechar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+}
+
+.botao-fechar:hover {
+    background-color: #c0392b;
+}
+
+.modal-imagem {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+}
+
+.modal-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-info {
+    padding: 2rem;
+}
+
+.modal-info h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0 0 1rem 0;
+}
+
+.modal-descricao {
+    background-color: #ecf0f1;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-descricao h3 {
+    margin: 0 0 0.75rem 0;
+    color: #2c3e50;
+    font-weight: 700;
+}
+
+.modal-descricao p {
+    margin: 0;
+    color: #34495e;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.modal-arquivo {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.modal-arquivo strong {
+    color: #2c3e50;
+}
+
+/* Responsividade 
+@media (max-width: 768px) {
+    .grid-cards {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .modal-conteudo {
+        max-width: 95vw;
+        border-radius: 0.5rem;
+    }
+
+    .modal-imagem {
+        height: 250px;
+    }
+
+    .modal-info {
+        padding: 1.5rem;
+    }
+
+    .modal-info h2 {
+        font-size: 1.5rem;
+    }
+
+    .modal-preco {
+        font-size: 1.5rem;
+    }
+
+    .titulo-lista {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .card-imagem {
+        height: 200px;
+    }
+
+    .modal-overlay {
+        padding: 0;
+    }
+
+    .modal-conteudo {
+        border-radius: 0;
+        max-height: 100vh;
+    }
+
+    .botao-voltar {
+        margin-bottom: 1rem;
+    }
+
+    .btn-voltar {
+        width: 100%;
+    }
+}
+*/
