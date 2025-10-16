@@ -4,7 +4,6 @@ import { useState, useRef } from "react";
 // Icones
 import {Package, DollarSign, FileText, CheckCircle} from 'lucide-react';
 import "./Formulario.css";      // import do CSS puro
-import Footer from "./Footer";
 
 export default function FormularioProdutos() {
     const [dadosForm, setDadosForm] = useState({
@@ -19,14 +18,23 @@ export default function FormularioProdutos() {
     const [sucesso, setSucesso] = useState(false);
     const inputImagemRef = useRef(null);
 
+    // Entrada de dados pelo usuário
     const lidarComEntradaDeDados = (e) => {
         const { name, value } = e.target;
         setDadosForm((prev) => ({
         ...prev,
         [name]: value,
         }));
+        // Limpa o erro deste campo ao começar a digitar
+        if (erros[name]) {
+          setErros((prev) => ({
+            ...prev,
+            [name]: ""
+          }))
+        }
     };
 
+    // Entrada da imagem pelo usuário
     const lidarComImagem = (e) => {
         const arqImagem = e.target.files[0];
 
@@ -46,8 +54,13 @@ export default function FormularioProdutos() {
         }
     };
 
+    // Envio do formulário
     const lidarComEnvio = (e) => {
         e.preventDefault();
+
+        if (!validarFormulario()) {
+          return;
+        }
 
         if (!dadosForm.nomeProduto || !dadosForm.precoProduto || !dadosForm.descricaoProduto || !dadosForm.imagemProduto) {
             alert("Por favor, preencha todos os campos do formulário");
@@ -71,6 +84,7 @@ export default function FormularioProdutos() {
             imagemProduto: null,
         });
         setVisualImagem(null);
+        setErros({});
         setSucesso(true);
         setTimeout(() => setSucesso(false), 3000);
 
@@ -80,6 +94,7 @@ export default function FormularioProdutos() {
         }
     };
 
+    // Limpa o formulário
     const limparFormulario = () => {
         setDadosForm({
             nomeProduto: "",
@@ -88,12 +103,57 @@ export default function FormularioProdutos() {
             imagemProduto: null,
         });
         setVisualImagem(null);
+        setErros({});
 
         // Limpa o campo de arquivo
         if (inputImagemRef.current) {
             inputImagemRef.current.value = '';
         }
     };
+
+    const [erros, setErros] = useState({});
+
+    // Validação do formulário
+    const  validarFormulario = () => {
+      const novosErros = {};
+
+      // Validar Nome (3-50 caracteres é obrigatório)
+      if (!dadosForm.nomeProduto.trim()) {
+        novosErros.nomeProduto = "Nome do produto é obrigatório";
+      } else if (dadosForm.nomeProduto.trim().length < 3) {
+        novosErros.nomeProduto = "Nome do produto deve ter mínimo de 3 caracteres";
+      } else if (dadosForm.nomeProduto.trim().length > 50) {
+        novosErros.nomeProduto = "Nome do produto deve ter máximo de 50 caracteres";
+      }
+
+      // Validar Preço (mínimo 10 é obrigatório)
+      if (!dadosForm.precoProduto) {
+        novosErros.precoProduto = "Preço do produto é obrigatório";
+      } else if (parseFloat(dadosForm.precoProduto) < 10) {
+        novosErros.precoProduto = "Preço do produto mínimo é R$ 10,00";
+      }
+
+      // Validar Descrição (30-255 caracteres é obrigatório)
+      if (!dadosForm.descricaoProduto.trim()) {
+        novosErros.descricaoProduto = "Descrição do produto é obrigatória";
+      } else if (dadosForm.descricaoProduto.trim().length < 30) {
+        novosErros.descricaoProduto = "Descrição do produto deve ter mínimo 30 caracteres";
+      } else if (dadosForm.descricaoProduto.trim().length > 255) {
+        novosErros.descricaoProduto = "Descrição do produto deve ter máximo 255 caracteres";
+      }
+
+      // Validar Imagem (PNG/JPG máximo 5MB é opcional)
+      if (dadosForm.imagemProduto) {
+        if (dadosForm.imagemProduto.type !== "image/png" && dadosForm.imagemProduto.type !== "image/jpg") {
+          novosErros.imagemProduto = "Apenas PNG ou JPG são aceitos"
+        } else if (dadosForm.imagemProduto.size > 5 * 1024 * 1024) {
+          novosErros.imagemProduto = "Imagem do produto não pode ultrapassar 5MB";
+        }
+      }
+
+      setErros(novosErros);
+      return Object.keys(novosErros).length === 0;
+    }
 
   return (
     <div className="pagina">
@@ -118,6 +178,7 @@ export default function FormularioProdutos() {
             <label>
               <span>
                 Nome do Produto
+                <small> (3-50 caracteres)</small>
               </span>
               <input
                 type="text"
@@ -125,12 +186,16 @@ export default function FormularioProdutos() {
                 value={dadosForm.nomeProduto}
                 onChange={lidarComEntradaDeDados}
                 placeholder="Informe o nome do produto"
+                className={erros.nomeProduto ? "input-erro" : ""}
               />
+              {erros.nomeProduto && <p className="mensagem-erro">{erros.nomeProduto}</p>}
+              <small className="contador">{dadosForm.nomeProduto.length}/50</small>
             </label>
 
             <label>
               <span>
                 Preço do Produto (em R$)
+                <small> (mínimo: R$ 10,00)</small>
               </span>
               <input
                 type="number"
@@ -140,12 +205,15 @@ export default function FormularioProdutos() {
                 step="0.01"
                 min="0"
                 placeholder="Informe o preço do produto"
+                className={erros.precoProduto ? "input-erro" : ""}
               />
+              {erros.precoProduto && <p className="mensagem-erro">{erros.precoProduto}</p>}
             </label>
 
             <label>
               <span>
                 Descrição Completa do Produto
+                <small> (30-255 caracteres)</small>
               </span>
               <textarea
                 name="descricaoProduto"
@@ -153,19 +221,25 @@ export default function FormularioProdutos() {
                 onChange={lidarComEntradaDeDados}
                 rows="5"
                 placeholder="Descreva as características do produto..."
+                className={erros.descricaoProduto ? "input-erro" : ""}
               />
+              {erros.descricaoProduto && <p className="mensagem-erro">{erros.descricaoProduto}</p>}
+              <small className="contador">{dadosForm.descricaoProduto.length}/255</small>
             </label>
 
             <label>
               <span>
                 Imagem do Produto (PNG ou JPG)
+                <small> (opcional, máximo 5MB)</small>
               </span>
               <input
                 type="file"
                 accept=".png,.jpg,.jpeg"
                 onChange={lidarComImagem}
                 ref={inputImagemRef}
+                className={erros.imagemProduto ? "input-erro" : ""}
               />
+              {erros.imagemProduto && <p className="mensagem-erro">{erros.imagemProduto}</p>}
             </label>
 
             {visualImagem && (
@@ -203,7 +277,12 @@ export default function FormularioProdutos() {
         )}
       </div>
 
-      <Footer />
+      <footer className="rodape">
+        <p>© 2025 TagProducts — Todos os direitos reservados.</p>
+        <p>
+          Desenvolvido por <strong>Felipe Almeida</strong>
+        </p>
+      </footer>
     </div>
 
   );
