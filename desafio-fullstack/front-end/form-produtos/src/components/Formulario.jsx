@@ -99,6 +99,42 @@ export default function FormularioProdutos({onAdicionarProduto}) {
         if (inputImagemRef.current) {
             inputImagemRef.current.value = '';
         }
+
+
+        /*
+        // Fetch - Ligação Front-end e Back-end:
+        const formData = new FormData();
+        formData.append("nome", dadosForm.nomeProduto);
+        formData.append("preco", dadosForm.precoProduto);
+        formData.append("descricao", dadosForm.descricaoProduto);
+
+        if (dadosForm.imagemProduto) {
+          formData.append("imagem", dadosForm.imagemProduto);
+        }
+
+
+        fetch("http://localhost:3000/api/v1/produtos", {
+          method: "POST",
+          body: formData,
+        })
+          .then(async (res) => {
+            if (!res.ok) {
+              const erro = await res.json();
+              throw new Error(erro.erro || "Erro ao cadastrar produto");
+            }
+            return res.json();
+          })
+          .then((data) => {
+            console.log("Produto criado: ", data);
+            alert("Produto cadastrado com sucesso!");
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("Falha ao cadastrar produto.");
+          });
+        */
+
+          
     };
 
     // Limpa o formulário
