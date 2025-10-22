@@ -13,6 +13,8 @@
 # 6. Instalar Activate Storage:
 #    rails active_storage:install
 #    rails db:migrate
+# 7. Testar a API no back-end
+#    rails s
 
 class CreateProdutos < ActiveRecord::Migration[7.0]
     def change
@@ -20,7 +22,6 @@ class CreateProdutos < ActiveRecord::Migration[7.0]
             t.string :nome, null: false
             t.decimal :preco, precision: 10, scale: 2, null: false
             t.text :descricao, null: false
-            t.string :imagem
 
             t.timestamps
         end
