@@ -6,7 +6,7 @@
 module Api
     module V1
       class ProdutosController < ApplicationController
-        before_action :set_produto, only: [:show, :update, :destroy]
+        before_action :set_produto, only: [:show, :destroy]
   
         # GET /api/v1/produtos
         def index
@@ -64,8 +64,8 @@ module Api
             nome: produto.nome,
             preco: format("%.2f", produto.preco),
             descricao: produto.descricao,
-            criado_em: produto.created_at.iso8601,
-            atualizado_em: produto.updated_at.iso8601
+            criado_em: produto.created_at.strftime('%d/%m/%Y %H:%M:%S'),     # formato de horas brasileiro
+            atualizado_em: produto.updated_at.strftime('%d/%m/%Y %H:%M:%S')  # formato de horas brasileiro
           }
   
           if produto.imagem.attached?
