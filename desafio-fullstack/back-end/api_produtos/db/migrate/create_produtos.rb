@@ -10,3 +10,18 @@
 #
 # 5. Criar o controller:
 #    rails generate controller Api::V1::Produtos
+
+class CreateProdutos < ActiveRecord::Migration[7.0]
+    def change
+        create_table :produtos do |t|
+            t.string :nome, null: false
+            t.decimal :preco, precision: 10, scale: 2, null: false
+            t.text :descricao, null: false
+            t.string :imagem
+
+            t.timestamps
+        end
+
+        add_index :produtos, :nome
+    end
+end
