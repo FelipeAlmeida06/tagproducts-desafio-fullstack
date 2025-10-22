@@ -10,6 +10,9 @@
 #
 # 5. Criar o controller:
 #    rails generate controller Api::V1::Produtos
+# 6. Instalar Activate Storage:
+#    rails active_storage:install
+#    rails db:migrate
 
 class CreateProdutos < ActiveRecord::Migration[7.0]
     def change

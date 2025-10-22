@@ -14,13 +14,13 @@ module Api
                     render json: {
                         mensagem: "Produto criado com sucesso",
                         produto: produto_response(@produto)
-                    }, status: :created_at
-                    else 
-                        render json: {
-                            erro: "Não foi possível criar o produto",
-                            detalhes: @produto.errors.full_messages
-                        }, status: :unprocessable_entity
-                    end
+                    }, status: :created
+                else 
+                    render json: {
+                        erro: "Não foi possível criar o produto",
+                        detalhes: format_errors(@produto.errors)
+                    }, status: :unprocessable_entity
+                end
                 rescue ActionControler::ParameterMissing => e
                     render json: {
                         erro: "Parâmetros inválidos",
@@ -31,19 +31,40 @@ module Api
                 private
 
                 def produto_params
-                    params.require(:produto).permit(:nome, :preco, :imagem, :descricao)
+                    params.permit(:nome, :preco, :descricao, :imagem)
                 end
 
                 def produto_response(produto)
-                    {
+                    response = {
                         id: produto.id,
                         nome: produto.nome,
                         preco: format("%.2f", produto.preco),
-                        imagem: produto.imagem,
                         descricao: produto.descricao,
+                        imagem: produto.imagem,
                         criado_em: produto.created_at.iso8601,
                         atualizado_em: produto.updated_at.iso8601
                     }
+
+                    # validações:
+                    if produto.imagem.attached?
+                        response[:imagem] = {
+                            url: url_for(produto.imagem),
+                            nome: produto.imagem.filename.to_s,
+                            tamanho: produto.imagem.byte_size,
+                            tipo: produto.imagem.content_type
+                        }
+                    else
+                        response[:imagem] = nil
+                    end
+
+                    response
+                end
+
+                def format_errors(errors)
+                    errors.full_messages.map do |message|
+                        # remove prefixo "Imagem" das mensagens de validação
+                        #message.gsub(/^Imagem /, '')
+                    end
                 end
             end
         end
