@@ -18,9 +18,10 @@ export default function FormularioProdutos({onAdicionarProduto}) {
     });
 
     const [visualImagem, setVisualImagem] = useState(null);
-    //const [produtos, setProdutos] = useState([]);
     const [sucesso, setSucesso] = useState(false);
     const inputImagemRef = useRef(null);
+
+    const [carregando, setCarregando] = useState(false);
 
     // Entrada de dados pelo usuário
     const lidarComEntradaDeDados = (e) => {
@@ -59,7 +60,7 @@ export default function FormularioProdutos({onAdicionarProduto}) {
     };
 
     // Envio do formulário
-    const lidarComEnvio = (e) => {
+    const lidarComEnvio = async (e) => {
         e.preventDefault();
 
         if (!validarFormulario()) {
@@ -80,10 +81,6 @@ export default function FormularioProdutos({onAdicionarProduto}) {
             nomeArq: dadosForm.imagemProduto.name,
         };
 
-        // Chama a função para adicionar o produto
-        onAdicionarProduto(novoProduto);
-
-        //setProdutos((prev) => [...prev, novoProduto]);
         setDadosForm({
             nomeProduto: "",
             precoProduto: "",
@@ -100,41 +97,78 @@ export default function FormularioProdutos({onAdicionarProduto}) {
             inputImagemRef.current.value = '';
         }
 
+        setCarregando(true);
+        
 
-        /*
-        // Fetch - Ligação Front-end e Back-end:
+        // Fetch - Conexão Front-end + Back-end e Banco de Dados PostgreSQL:
         const formData = new FormData();
-        formData.append("nome", dadosForm.nomeProduto);
+        formData.append("nome", dadosForm.nomeProduto.trim());
         formData.append("preco", dadosForm.precoProduto);
-        formData.append("descricao", dadosForm.descricaoProduto);
+        formData.append("descricao", dadosForm.descricaoProduto.trim());
 
+        // Adicionar imagem se existir
         if (dadosForm.imagemProduto) {
           formData.append("imagem", dadosForm.imagemProduto);
         }
 
-
-        fetch("http://localhost:3000/api/v1/produtos", {
-          method: "POST",
-          body: formData,
-        })
-          .then(async (res) => {
-            if (!res.ok) {
-              const erro = await res.json();
-              throw new Error(erro.erro || "Erro ao cadastrar produto");
-            }
-            return res.json();
-          })
-          .then((data) => {
-            console.log("Produto criado: ", data);
-            alert("Produto cadastrado com sucesso!");
-          })
-          .catch((err) => {
-            console.log(err);
-            alert("Falha ao cadastrar produto.");
+        try {
+          const response = await fetch('http://localhost:3000/api/v1/produtos', {
+            method: 'POST',
+            body: formData
           });
-        */
 
-          
+          const data = await response.json();
+
+          if (response.ok) {
+            // sucesso - status 201
+            console.log("Produto criado com sucesso: ", data);
+            alert(data.mensagem);
+
+            onAdicionarProduto(data.produto);
+
+            // Limpar formulário
+            setDadosForm({
+              nomeProduto: "",
+              precoProduto: "",
+              descricaoProduto: "",
+              imagemProduto: null
+            });
+
+            setVisualImagem(null);
+            setErros({});
+            setSucesso(true);
+            setTimeout(() => setSucesso(false), 3000);
+
+            // Limpa o campo de arquivo
+            if (inputImagemRef.current) {
+                inputImagemRef.current.value = '';
+            }
+
+          } else {
+            // Erro de validação - status 422 ou 400
+            console.error("Erros de validação: ", data.detalhes);
+
+            // Mostrar erros para o usuário
+            alert("Erro: ", data.detalhes.join('\n'));
+
+            // Ou mapear erros para os campos:
+            const errosFrontBack = {};
+            data.detalhes.forEach(erro => {
+              if (erro.includes("Nome")) errosFrontBack.nomeProduto = erro;
+              if (erro.includes("Preço")) errosFrontBack.precoProduto = erro;
+              if (erro.includes("Descrição")) errosFrontBack.descricaoProduto = erro;
+              if (erro.includes("Imagem") || erro.includes("PNG") || erro.includes("2MB")) {
+                errosFrontBack.imagemProduto = erro;
+              }
+            });
+
+            setErros(errosFrontBack);
+          }
+        }
+        catch (error) {
+          console.log("Erro na requisição: ", error);
+          alert("Erro ao conectar com o servidor.")
+        }
     };
 
     // Limpa o formulário
@@ -312,31 +346,6 @@ export default function FormularioProdutos({onAdicionarProduto}) {
           </button>
         </div>
 
-
-        {/*
-        {produtos.length > 0 && (
-          <div className="card">
-            <h2>Produtos Cadastrados</h2>
-            <div className="lista-produtos">
-              {produtos.map((produto) => (
-                <div key={produto.id} className="item-produto">
-                  <img src={produto.imagemProd} alt={produto.nomeProd} />
-                  <div>
-                    <p>Nome: {produto.nomeProd}</p>
-                    <p className="preco">
-                      Preço: R$ {produto.precoProd.toFixed(2).replace(".", ",")}
-                    </p>
-                    <p>Descrição: {produto.descricaoProd}</p>
-                    <p className="arquivo">Nome do arquivo: {produto.nomeArq}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-        */}
-
-        
       </div>
 
       <footer className="rodape">

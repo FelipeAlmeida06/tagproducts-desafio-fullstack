@@ -96,30 +96,32 @@ export default function CardsProdutos({produtos}) {
                         <div className="grid-cards">
                             {produtosExibidos.map((produto) => (
                                 <div
-                                key={produto.id}
-                                className="card-produto"
-                                onClick={() => abrirModal(produto)}
+                                    key={produto.id}
+                                    className="card-produto"
+                                    onClick={() => abrirModal(produto)}
                                 >
-                                <div className="card-imagem">
-                                    <img
-                                    src={produto.imagemProd || imagemFallback}
-                                    alt={produto.nomeProd}
-                                    />
-                                </div>
-                                <div className="card-info">
-                                    <h3>{produto.nomeProd}</h3>
-                                    <p className="card-preco">
-                                    R$ {produto.precoProd.toFixed(2).replace(".", ",")}
-                                    </p>
-                                </div>
-                                <div className="card-hover">
-                                    <span>Mais detalhes sobre o produto</span>
-                                </div>
+                                    <div className="card-imagem">
+                                        <img
+                                            src={produto.imagem?.url || produto.imagemProd || imagemFallback}
+                                            alt={produto.nome || produto.nomeProd}
+                                        />
+                                    </div>
+                                    <div className="card-info">
+                                        <h3>{produto.nome || produto.nomeProd}</h3>
+                                        <p className="card-preco">
+                                            R$ {typeof produto.preco === 'string' 
+                                                ? produto.preco.replace('.', ',')
+                                                : (produto.precoProd || produto.preco || 0).toFixed(2).replace(".", ",")}
+                                        </p>
+                                    </div>
+                                    <div className="card-hover">
+                                        <span>Mais detalhes sobre o produto</span>
+                                    </div>
                                 </div>
                             ))}
                         </div>
 
-                        {/* 🔹 Componente de paginação */}
+                        {/* Paginação */}
                         <PaginacaoProdutos
                             paginaAtual={paginaAtual}
                             totalPaginas={totalPaginas}
@@ -131,7 +133,6 @@ export default function CardsProdutos({produtos}) {
                     </div>
                 )}
             </div>
-
 
             {/* Modal */}
             {modalAberto && prodSelecionado && (
@@ -147,25 +148,31 @@ export default function CardsProdutos({produtos}) {
 
                         <div className="modal-imagem">
                             <img
-                                src={prodSelecionado.imagemProd || imagemFallback}
-                                alt={prodSelecionado.nomeProd}
+                                src={prodSelecionado.imagem?.url || prodSelecionado.imagemProd || imagemFallback}
+                                alt={prodSelecionado.nome || prodSelecionado.nomeProd}
                             />
                         </div>
 
                         <div className="modal-info">
-                            <h3>Nome: {prodSelecionado.nomeProd}</h3>
+                            <h3>Nome: {prodSelecionado.nome || prodSelecionado.nomeProd}</h3>
                             
-                            <h3 className="">
-                                Preço: R$ {prodSelecionado.precoProd.toFixed(2).replace(".", ",")}
+                            <h3>
+                                Preço: R$ {typeof prodSelecionado.preco === 'string'
+                                    ? prodSelecionado.preco.replace('.', ',')
+                                    : (prodSelecionado.precoProd || prodSelecionado.preco || 0).toFixed(2).replace(".", ",")}
                             </h3>
 
                             <div className="modal-descricao">
                                 <h3>Descrição:</h3>
-                                <p>{prodSelecionado.descricaoProd}</p>
+                                <p>{prodSelecionado.descricao || prodSelecionado.descricaoProd}</p>
                             </div>
 
                             <p className="modal-arquivo">
-                                <strong>Arquivo da imagem:</strong> {prodSelecionado.nomeArq}
+                                <strong>Arquivo da imagem:</strong> {
+                                    prodSelecionado.imagem?.nome || 
+                                    prodSelecionado.nomeArq || 
+                                    'Sem arquivo'
+                                }
                             </p>
                         </div>
                     </div>
