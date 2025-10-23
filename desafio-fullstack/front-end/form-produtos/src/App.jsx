@@ -3,6 +3,7 @@ import './App.css'
 
 import FormularioProdutos from './components/Formulario'
 import CardsProdutos from './components/Cards'
+import PaginaNaoEncontrada from './components/PagNaoExiste'
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
@@ -61,6 +62,13 @@ function App() {
             )
           } 
         />
+
+        {/* Rota 404 - Página Não Encontrada */}
+        <Route 
+          path="*" 
+          element={<PaginaNaoEncontrada />} 
+        />
+        
       </Routes>
     </Router>
   )

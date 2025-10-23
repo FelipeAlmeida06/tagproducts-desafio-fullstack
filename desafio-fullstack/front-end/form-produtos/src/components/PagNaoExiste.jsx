@@ -1,0 +1,88 @@
+// PagNaoExiste.jsx
+
+import React from "react";
+
+import Image1 from "../assets/imagem/pagina-nao-encontrada.jpg";
+
+const PaginaNaoEncontrada = () => {
+    return (
+        <div style={styles.container}>
+            <div style={styles.content}>
+                <img src={Image1} alt="Página Não Encontrada" style={styles.image} />
+                <h1 style={styles.titulo}>404 Not Found</h1>
+                <p style={styles.subtitulo}>Oooops. Essa página não existe.</p>
+                <p style={styles.mensagem}>
+                    A página que você está procurando não existe ou foi removida.
+                </p>
+            </div>
+        </div>
+    );
+}
+
+const styles = {
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        backgroundColor: '#f8f9fa',
+        fontFamily: 'Roboto, sans-serif',
+        color: '#343a40',
+        textAlign: 'center',
+        padding: '20px',
+        boxSizing: 'border-box',
+    },
+    content: {
+        maxWidth: '600px',
+        padding: '40px',
+        backgroundColor: '#ffffff',
+        borderRadius: '15px',
+        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+    },
+    image: {
+        width: '100%',
+        maxWidth: '300px',
+        height: 'auto',
+        marginBottom: '30px',
+        borderRadius: '10px',
+    },
+    titulo: {
+        fontSize: '5em',
+        margin: '0',
+        color: '#e74c3c',
+        fontWeight: '700',
+        letterSpacing: '5px',
+    },
+    subtitulo: {
+        fontSize: '2em',
+        margin: '10px 0 20px 0',
+        color: '#555',
+        fontWeight: '500',
+    },
+    mensagem: {
+        fontSize: '1.1em',
+        lineHeight: '1.6',
+        marginBottom: '30px',
+        color: '#6c757d',
+    },
+    link: {
+        display: 'inline-block',
+        marginTop: '20px',
+        padding: '12px 25px',
+        fontSize: '1.0em',
+        color: '#ffffff',
+        backgroundColor: '#007bff',
+        textDecoration: 'none',
+        borderRadius: '8px',
+        transition: 'background-color 0.3s ease, transform 0.2s ease',
+        fontWeight: '600',
+    },
+    // Efeito hover para o link
+    linkHover: {
+        backgroundColor: '#0056b3',
+        transform: 'translateY(-2px)',
+    }
+};
+
+export default PaginaNaoEncontrada
