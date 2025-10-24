@@ -67,7 +67,8 @@ export default function FormularioProdutos({onAdicionarProduto}) {
           return;
         }
 
-        if (!dadosForm.nomeProduto || !dadosForm.precoProduto || !dadosForm.descricaoProduto || !dadosForm.imagemProduto) {
+        // !dadosForm.imagemProduto - deixar imagem como opcional
+        if (!dadosForm.nomeProduto || !dadosForm.precoProduto || !dadosForm.descricaoProduto) {
             alert("Por favor, preencha todos os campos do formulário");
             return;
         }
@@ -78,7 +79,8 @@ export default function FormularioProdutos({onAdicionarProduto}) {
             precoProd: parseFloat(dadosForm.precoProduto),
             descricaoProd: dadosForm.descricaoProduto,
             imagemProd: visualImagem,
-            nomeArq: dadosForm.imagemProduto.name,
+            nomeArq: dadosForm.imagemProduto ? dadosForm.imagemProduto.name : null, 
+            // Nome do arquivo opcional  //nomeArq: dadosForm.imagemProduto.name,
         };
 
         setDadosForm({
@@ -114,6 +116,9 @@ export default function FormularioProdutos({onAdicionarProduto}) {
         try {
           const response = await fetch('http://localhost:3000/api/v1/produtos', {
             method: 'POST',
+            headers: {
+              'X-API-KEY': 'tagview-desafio-2024'
+            },
             body: formData
           });
 
@@ -144,6 +149,8 @@ export default function FormularioProdutos({onAdicionarProduto}) {
                 inputImagemRef.current.value = '';
             }
 
+          } else if (response.status === 401) {
+            alert("Erro de autenticação: API Key inválida");
           } else {
             // Erro de validação - status 422 ou 400
             console.error("Erros de validação: ", data.detalhes);
@@ -168,6 +175,8 @@ export default function FormularioProdutos({onAdicionarProduto}) {
         catch (error) {
           console.log("Erro na requisição: ", error);
           alert("Erro ao conectar com o servidor.")
+        } finally {
+          setCarregando(false);
         }
     };
 
@@ -342,7 +351,7 @@ export default function FormularioProdutos({onAdicionarProduto}) {
 
         <div className="botoes-navegacao">
           <button className="botao-exibir" onClick={irPaginaExibicao}>
-            📦 Ver Produtos Cadastrados
+            Ver Produtos Cadastrados
           </button>
         </div>
 

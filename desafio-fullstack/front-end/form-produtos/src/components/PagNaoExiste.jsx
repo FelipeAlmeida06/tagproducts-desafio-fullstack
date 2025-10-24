@@ -4,7 +4,15 @@ import React from "react";
 
 import Image1 from "../assets/imagem/pagina-nao-encontrada.jpg";
 
+import { useNavigate } from "react-router-dom";
+
 const PaginaNaoEncontrada = () => {
+    const navigate = useNavigate();
+
+    const voltarInicio = () => {
+        navigate("/produtos/cadastro");
+    };
+
     return (
         <div style={styles.container}>
             <div style={styles.content}>
@@ -14,6 +22,22 @@ const PaginaNaoEncontrada = () => {
                 <p style={styles.mensagem}>
                     A página que você está procurando não existe ou foi removida.
                 </p>
+
+
+                <button 
+                    onClick={voltarInicio} 
+                    style={styles.botao}
+                    onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#0056b3';
+                        e.target.style.transform = 'translateY(-2px)';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#007bff';
+                        e.target.style.transform = 'translateY(0)';
+                    }}
+                >
+                    Voltar para a Página de Cadastro
+                </button>
             </div>
         </div>
     );
@@ -36,9 +60,9 @@ const styles = {
     content: {
         maxWidth: '600px',
         padding: '40px',
-        backgroundColor: '#ffffff',
-        borderRadius: '15px',
-        boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
+        //backgroundColor: '#ffffff',
+        //borderRadius: '15px',
+        //boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
     },
     image: {
         width: '100%',
@@ -82,6 +106,21 @@ const styles = {
     linkHover: {
         backgroundColor: '#0056b3',
         transform: 'translateY(-2px)',
+    },
+    botao: {
+        display: 'inline-block',
+        marginTop: '20px',
+        padding: '15px 30px',
+        fontSize: '1.1em',
+        color: '#ffffff',
+        backgroundColor: '#007bff',
+        border: 'none',
+        borderRadius: '8px',
+        cursor: 'pointer',
+        transition: 'all 0.3s ease',
+        fontWeight: '600',
+        fontFamily: 'Roboto, sans-serif',
+        boxShadow: '0 4px 6px rgba(0, 123, 255, 0.3)',
     }
 };
 

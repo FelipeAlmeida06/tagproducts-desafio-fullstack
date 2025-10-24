@@ -5,7 +5,7 @@ import FormularioProdutos from './components/Formulario'
 import CardsProdutos from './components/Cards'
 import PaginaNaoEncontrada from './components/PagNaoExiste'
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
 function App() {
   const [produtos, setProdutos] = useState([]);
@@ -18,11 +18,18 @@ function App() {
   // Função para buscar produtos
   const buscarProdutos = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/v1/produtos');
+      const response = await fetch('http://localhost:3000/api/v1/produtos', {
+        headers: {
+          'X-API-KEY': 'tagview-desafio-2024'
+        }
+      });
 
       if (response.ok) {
         const data = await response.json();
         setProdutos(data);
+      } else if (response.status === 401) {
+        console.error("API Key inválida");
+        alert("Erro de autenticação: API Key inválida");
       }
     }
     catch (error) {
@@ -40,9 +47,15 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Rota do Formulário */}
+        {/* Rediciona para produtos/cadastro */}
         <Route 
           path="/" 
+          element={<Navigate to="/produtos/cadastro" replace />}  
+        />
+
+        {/* Rota do Formulário */}
+        <Route 
+          path="/produtos/cadastro" 
           element={
             <FormularioProdutos 
               onAdicionarProduto={adicionarProduto}

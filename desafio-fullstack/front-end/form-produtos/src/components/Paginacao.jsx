@@ -9,7 +9,8 @@ export default function PaginacaoProdutos({
     limite,
     onAlterarLimite,
     onPaginaAnterior,
-    onPaginaProxima
+    onPaginaProxima,
+    totalProdutos
 }) 
 {
     return (
@@ -25,6 +26,7 @@ export default function PaginacaoProdutos({
                 <option value={10}>10 por página</option>
                 <option value={20}>20 por página</option>
                 <option value={50}>50 por página</option>
+                <option value={totalProdutos}>Todos</option>
                 </select>
             </div>
 

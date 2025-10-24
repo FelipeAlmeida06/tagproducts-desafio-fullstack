@@ -55,7 +55,7 @@ export default function CardsProdutos({produtos}) {
     };
 
     const voltar = () => {
-        navigate("/");
+        navigate("/produtos/cadastro");
     };
 
     const irParaAnterior = () => setPaginaAtual((p) => Math.max(p - 1, 1));
@@ -126,6 +126,7 @@ export default function CardsProdutos({produtos}) {
                             paginaAtual={paginaAtual}
                             totalPaginas={totalPaginas}
                             limite={limite}
+                            totalProdutos={produtos.length}
                             onAlterarLimite={alterarLimite}
                             onPaginaAnterior={irParaAnterior}
                             onPaginaProxima={irParaProximo}

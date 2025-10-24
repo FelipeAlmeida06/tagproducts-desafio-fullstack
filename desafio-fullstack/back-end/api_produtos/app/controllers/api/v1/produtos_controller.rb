@@ -60,12 +60,20 @@ module Api
   
         def produto_response(produto)
           response = {
-            id: produto.id,
+            # corpo JSON mais complexo:
+            #id: produto.id,
+            #nome: produto.nome,
+            #preco: format("%.2f", produto.preco),
+            #descricao: produto.descricao,
+            #criado_em: produto.created_at.strftime('%d/%m/%Y %H:%M:%S'),     # formato de horas brasileiro
+            #atualizado_em: produto.updated_at.strftime('%d/%m/%Y %H:%M:%S')  # formato de horas brasileiro
+
+
+            # corpo JSON mais simples:
             nome: produto.nome,
-            preco: format("%.2f", produto.preco),
-            descricao: produto.descricao,
-            criado_em: produto.created_at.strftime('%d/%m/%Y %H:%M:%S'),     # formato de horas brasileiro
-            atualizado_em: produto.updated_at.strftime('%d/%m/%Y %H:%M:%S')  # formato de horas brasileiro
+            preco: produto.preco.to_f,  # Retorna como number
+            imagem: produto.imagem.attached? ? url_for(produto.imagem) : nil,  # String ou null
+            descricao: produto.descricao
           }
   
           if produto.imagem.attached?
