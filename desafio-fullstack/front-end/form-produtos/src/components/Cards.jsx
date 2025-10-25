@@ -14,7 +14,7 @@ export default function CardsProdutos({produtos}) {
     const navigate = useNavigate();
     const [modalAberto, setModalAberto] = useState(false);
     const [prodSelecionado, setProdSelecionado] = useState(null);
-
+    const [mostrarSucesso, setMostrarSucesso] = useState(false);
 
     // Paginação
     const [paginaAtual, setPaginaAtual] = useState(1);
@@ -29,11 +29,23 @@ export default function CardsProdutos({produtos}) {
     // Verifica se há um idProduto na URL ao carregar a página
     useEffect(() => {
         const idProduto = searchParams.get("idProduto");
+        const novoCadastro = searchParams.get("novo");
+
         if (idProduto) {
             const produto = produtos.find(p => p.id === parseInt(idProduto));
             if (produto) {
                 setProdSelecionado(produto);
                 setModalAberto(true);
+
+
+                // Mostrar mensagem de sucesso
+                if (novoCadastro === "true") {
+                    setMostrarSucesso(true);
+                    setTimeout(() => setMostrarSucesso(false), 3000);
+                    // Remove o parâmtro da URL
+                    searchParams.delete("novo");
+                    setSearchParams(searchParams);
+                }
             }
         }
     }, [searchParams, produtos]);
@@ -69,6 +81,28 @@ export default function CardsProdutos({produtos}) {
 
     return (
         <div className="pagina">
+            {/* ALERTA DE SUCESSO */}
+            {mostrarSucesso && (
+                <div style={{
+                    position: 'fixed',
+                    top: '20px',
+                    right: '20px',
+                    backgroundColor: '#28a745',
+                    color: 'white',
+                    padding: '15px 25px',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    zIndex: 9999,
+                    animation: 'slideIn 0.3s ease'
+                }}>
+                    <CheckCircle size={24} />
+                    <span style={{ fontWeight: '600' }}>Novo Produto Cadastrado!</span>
+                </div>
+            )}
+
             <header>
                 <h1>TagProducts</h1>
                 <h2>Teste para Desenvolvedor FullStack da Tagview</h2>

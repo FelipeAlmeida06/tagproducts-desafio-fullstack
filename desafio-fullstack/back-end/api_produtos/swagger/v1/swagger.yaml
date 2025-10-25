@@ -1,0 +1,11 @@
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  /ping:
+    get:
+      summary: Test endpoint
+      responses:
+        '200':
+          description: ok

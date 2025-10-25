@@ -49,4 +49,22 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Swagger da API
+  gem 'rspec-rails', '~> 6.0'
+  gem 'rswag-specs'
 end
+
+group :development do
+  gem 'rswag-api'
+  gem 'rswag-ui'
+end
+
+
+# Para instalar Swagger:
+#   bundle install
+#   rails generate rspec:install
+#   rails g rswag:install
+#   rails g rswag:api:install
+#   rails g rswag:ui:install
+#   rails db:migrate

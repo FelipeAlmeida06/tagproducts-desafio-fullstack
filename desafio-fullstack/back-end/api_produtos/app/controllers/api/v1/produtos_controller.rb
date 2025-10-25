@@ -1,16 +1,12 @@
-# Os campos deverão ser validados de acordo com os requisitos solicitados na etapa de Frontend:
-# Os requisitos solicitados de Frontend estão no arquivo: Formulario.jsx nas linhas 123 até 163
-# Seguir estes requisitos e alterar nesse arquivo
-
-
 module Api
     module V1
       class ProdutosController < ApplicationController
         before_action :set_produto, only: [:show, :destroy]
+        before_action :simulate_delay      # delay
   
         # GET /api/v1/produtos
         def index
-          @produtos = Produto.all
+          @produtos = Produto.all.order(id: :asc)  # ordena por ID crescente
           render json: @produtos.map { |produto| produto_response(produto) }
         end
   
@@ -36,7 +32,7 @@ module Api
           else
             render json: {
               erro: "Não foi possível criar o produto",
-              detalhes: format_errors(@produto.errors)
+              erros: format_errors(@produto.errors)
             }, status: :unprocessable_entity
           end
         rescue ActionController::ParameterMissing => e
@@ -47,6 +43,11 @@ module Api
         end
   
         private
+
+        # Delay
+        def simulate_delay
+          sleep 3    # Delay de 3 segundos
+        end 
   
         def set_produto
           @produto = Produto.find(params[:id])
@@ -60,19 +61,10 @@ module Api
   
         def produto_response(produto)
           response = {
-            # corpo JSON mais complexo:
-            #id: produto.id,
-            #nome: produto.nome,
-            #preco: format("%.2f", produto.preco),
-            #descricao: produto.descricao,
-            #criado_em: produto.created_at.strftime('%d/%m/%Y %H:%M:%S'),     # formato de horas brasileiro
-            #atualizado_em: produto.updated_at.strftime('%d/%m/%Y %H:%M:%S')  # formato de horas brasileiro
-
-
-            # corpo JSON mais simples:
+            id: produto.id,
             nome: produto.nome,
-            preco: produto.preco.to_f,  # Retorna como number
-            imagem: produto.imagem.attached? ? url_for(produto.imagem) : nil,  # String ou null
+            preco: produto.preco.to_f,  # retorna como number
+            imagem: produto.imagem.attached? ? url_for(produto.imagem) : nil,  # string ou null
             descricao: produto.descricao
           }
   
@@ -93,6 +85,7 @@ module Api
         def format_errors(errors)
           errors.full_messages
         end
+
       end
     end
   end

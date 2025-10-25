@@ -80,7 +80,6 @@ export default function FormularioProdutos({onAdicionarProduto}) {
             descricaoProd: dadosForm.descricaoProduto,
             imagemProd: visualImagem,
             nomeArq: dadosForm.imagemProduto ? dadosForm.imagemProduto.name : null, 
-            // Nome do arquivo opcional  //nomeArq: dadosForm.imagemProduto.name,
         };
 
         setDadosForm({
@@ -129,6 +128,7 @@ export default function FormularioProdutos({onAdicionarProduto}) {
             console.log("Produto criado com sucesso: ", data);
             alert(data.mensagem);
 
+            // Adicionar produto à lista
             onAdicionarProduto(data.produto);
 
             // Limpar formulário
@@ -148,6 +148,9 @@ export default function FormularioProdutos({onAdicionarProduto}) {
             if (inputImagemRef.current) {
                 inputImagemRef.current.value = '';
             }
+
+            // Redimensionar com ID do produto
+            navigate(`/produtos/exibir?idProduto=${data.produto.id}`);
 
           } else if (response.status === 401) {
             alert("Erro de autenticação: API Key inválida");
@@ -230,7 +233,10 @@ export default function FormularioProdutos({onAdicionarProduto}) {
 
       // Validar Imagem (PNG/JPG máximo 5MB é opcional)
       if (dadosForm.imagemProduto) {
-        if (dadosForm.imagemProduto.type !== "image/png" && dadosForm.imagemProduto.type !== "image/jpg") {
+        if (dadosForm.imagemProduto.type !== "image/png" && 
+            dadosForm.imagemProduto.type !== "image/jpg" && 
+            dadosForm.imagemProduto.type !== "image/jpeg") 
+        {
           novosErros.imagemProduto = "Apenas PNG ou JPG são aceitos"
         } else if (dadosForm.imagemProduto.size > 5 * 1024 * 1024) {
           novosErros.imagemProduto = "Imagem do produto não pode ultrapassar 5MB";
