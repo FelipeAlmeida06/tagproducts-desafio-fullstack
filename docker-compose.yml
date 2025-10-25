@@ -1,0 +1,34 @@
+services:
+  back-end:
+    build: ./desafio-fullstack/back-end/api_produtos
+    container_name: backend_service
+    command: bash -c "bundle exec rails db:migrate && bundle exec rails s -e production -p 4000 -b '0.0.0.0'"
+    ports:
+      - "4000:4000"
+    environment:
+      RAILS_ENV: production
+      RACK_ENV: production
+      DATABASE_URL: postgres://postgres:postgres@db:5432/app_db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  front-end:
+    build: ./desafio-fullstack/front-end/form-produtos
+    container_name: frontend_service
+    ports:
+      - "3000:80"  # Mapeia 3000 do host para 80 do Nginx
+    depends_on:
+      - back-end
+
+volumes:
+  pgdata:
